@@ -12,7 +12,6 @@
 
 
 <script lang="ts">
-import { ref } from 'vue'
 import { defineComponent } from 'vue';
 import QuizCard from "./components/QuizCard.vue";
 
@@ -22,11 +21,7 @@ export default defineComponent({
     QuizCard,
   },
 
-  setup () {
-    const questions = ref([
-      {}
-    ])
-  }
+ 
 });
 </script>
 
