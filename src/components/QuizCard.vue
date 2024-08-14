@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <form @submit.prevent="submitAnswer">
+    <form @submit.prevent="submitAnswer" v-if="!showScore">
       <div class="question">
         <div class="q"> {{questionCount}}) {{selectQuestion.question}}</div>
         <div class="option" v-for="(item , i ) in selectQuestion.answers">
@@ -10,6 +10,10 @@
       </div>
       <button type="submit">submit</button>
     </form>
+    <div class="score" v-else>
+      <p>Score is :  {{ score }} out of {{ questions.length }}</p>
+
+    </div>
   </div>
 </template>
 
@@ -50,7 +54,7 @@ export default defineComponent({
     const score = ref(0);
     const questionCount = ref(1)
     const selectedOption = ref('')
-    let count = 0;
+    const showScore = ref(false)
     const selectQuestion = ref(questions.value[0]);
     const submitAnswer =()=>{
       
@@ -58,10 +62,13 @@ export default defineComponent({
         score.value++;
       }
       if(questionCount.value < questions.value.length){
-        selectQuestion.value = questions.value[questionCount.value-1]
+        selectQuestion.value = questions.value[questionCount.value]
         questionCount.value++;
         selectedOption.value = ''; 
 
+      }
+      else{
+        showScore.value = true
       }
 
     }
@@ -72,6 +79,7 @@ export default defineComponent({
       selectedOption,
       submitAnswer,
       questionCount,
+      showScore,
       
     };
   },
@@ -115,5 +123,11 @@ form > button {
 }
 .option{
   padding: 0.5em 0;
+}
+.score {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
